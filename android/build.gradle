@@ -2,14 +2,16 @@ group 'net.zonble.flutter_open_chinese_convert'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.8.0'
+    // 與主應用程式統一 Kotlin 版本
+    ext.kotlin_version = '1.9.25'
     repositories {
         google()
-        jcenter()
+        mavenCentral() // 替換 jcenter()，因為已被棄用
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.0'
+        // 與主應用程式統一 AGP 版本
+        classpath 'com.android.tools.build:gradle:8.3.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -17,7 +19,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral() // 替換 jcenter()
         maven {
             url 'https://jitpack.io'
         }
@@ -30,31 +32,43 @@ apply plugin: 'kotlin-android'
 android {
     namespace "net.zonble.flutter_open_chinese_convert"
     testNamespace "net.zonble.flutter_open_chinese_convert"
-    compileSdkVersion 31
+    
+    // 與主應用程式統一 compileSdk
+    compileSdk 34
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        // 與主應用程式統一使用 Java 17
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
+    
     kotlinOptions {
-        jvmTarget = '1.8'
+        // 與主應用程式統一使用 JVM 17
+        jvmTarget = '17'
     }
+    
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+    
     defaultConfig {
         minSdkVersion 16
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    
     lintOptions {
         disable 'InvalidPackage'
     }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // 統一使用 Kotlin 1.9.25，移除重複依賴
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    
+    // OpenCC 中文轉換庫
     implementation "com.github.qichuan:android-opencc:1.2.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
+    
+    // 更新 Coroutines 版本以相容 Kotlin 1.9.25
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
 }
