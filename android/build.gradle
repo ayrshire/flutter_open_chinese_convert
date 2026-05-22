@@ -65,8 +65,9 @@ dependencies {
     // 統一使用 Kotlin 1.9.25，移除重複依賴
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     
-    // OpenCC 中文轉換庫
-    implementation "com.github.qichuan:android-opencc:1.2.0"
+    // OpenCC 中文轉換庫 — 使用 vendor 的 xyrlsz/android-opencc 1.4.0 .aar
+    // 對應 16 KB ELF 對齐（Google Play 2026/5/31 起 Android 15+ 要求）
+    implementation files('libs/android-opencc-1.4.0.aar')
     
     // 更新 Coroutines 版本以相容 Kotlin 1.9.25
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"

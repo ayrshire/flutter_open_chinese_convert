@@ -1,8 +1,8 @@
 package net.zonble.flutter_open_chinese_convert
 
 import android.content.Context
-import com.zqc.opencc.android.lib.ChineseConverter
-import com.zqc.opencc.android.lib.ConversionType
+import com.xyrlsz.opencc.android.lib.ChineseConverter
+import com.xyrlsz.opencc.android.lib.ConversionType
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
