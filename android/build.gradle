@@ -67,7 +67,14 @@ dependencies {
     
     // OpenCC 中文轉換庫 — 使用 vendor 的 xyrlsz/android-opencc 1.4.0 .aar
     // 對應 16 KB ELF 對齐（Google Play 2026/5/31 起 Android 15+ 要求）
-    implementation files('libs/android-opencc-1.4.0.aar')
+    //
+    // 為何用 compileOnly 而非 implementation：
+    // AGP 8 不允許 library module 用 `implementation files('local.aar')`
+    // （consumer 端 transitive 解析會失敗）。改為：
+    //   - plugin：compileOnly（編譯時看得到 class，但不包進 AAR）
+    //   - app：implementation files('libs/android-opencc-1.4.0.aar')（runtime 由 app 提供）
+    // 主 app 端需把同一份 .aar 複製到 android/app/libs/ 並在 app build.gradle 加 implementation。
+    compileOnly files('libs/android-opencc-1.4.0.aar')
     
     // 更新 Coroutines 版本以相容 Kotlin 1.9.25
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
